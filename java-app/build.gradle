@@ -27,7 +27,7 @@ publishing {
     repositories {
         maven {
             name = "nexus"
-            url = "http://157.230.222.202:8081/repository/project2-maven-hosted/"
+            url = project.findProperty("repoUrl") ?: "http://157.230.222.202:8081/repository/project2-maven-hosted/"
             allowInsecureProtocol = true 
 
             credentials {
