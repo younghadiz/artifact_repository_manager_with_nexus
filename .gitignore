@@ -1,9 +1,0 @@
-node_modules/
-*.tgz
-*.jar
-build/
-target/
-.gradle/
-.env
-*.log
-.DS_Store
