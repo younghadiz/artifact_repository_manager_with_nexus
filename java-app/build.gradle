@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.5'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group 'com.example'
+version '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+apply plugin: 'maven-publish' 
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact("build/libs/java-app-$version" + ".jar") {
+                extension 'jar'
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = "nexus"
+            url = project.findProperty("repoUrl") ?: "http://157.230.222.202:8081/repository/project2-maven-hosted/"
+            allowInsecureProtocol = true 
+
+            credentials {
+                username project.repoUser
+                password project.repoPassword
+            }
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://repo.spring.io/milestone'
+    }
+    maven {
+        url 'https://repo.spring.io/snapshot'
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '9.0'
+    testImplementation group: 'junit', name: 'junit', version: '4.13.2'
+    implementation "javax.annotation:javax.annotation-api:1.3.2"
+}
